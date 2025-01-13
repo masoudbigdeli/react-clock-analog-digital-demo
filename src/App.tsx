@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import Clock from 'clock-analog-digital-react';
-import AppWrapper, { ClockWrapper, CodeViewWrapper, PropertiesWrapper, PropertyContainer, PrpertyButtonWrapper } from "./styles/app";
+import AppWrapper, { ClockAndCodeWrapper, ClockWrapper, CodeViewWrapper, PropertiesWrapper, PropertyContainer, PrpertyButtonWrapper } from "./styles/app";
 import PropertySelect from './components/property-select';
 import Icon from './icons/icon';
 import { ClockProps, AnalogClockProps, DigitalClockProps } from './models/clockInterfaces';
@@ -28,7 +28,7 @@ function App() {
 
   // Handle adding properties, including complex objects
   const addPropertyHandle = useCallback(
-    (property: { title: string; value: string | number | boolean | { cmp: React.ReactNode; offset: number } }) => {
+    (property: { title: string; value: string | number | boolean | React.ReactNode | { cmp: React.ReactNode; offset: number } }) => {
       const title = property.title as keyof ClockProps;
       setPropertiesList((prevPropertiesList) => {
         const updatedPropertiesList = prevPropertiesList.filter((prop) => prop.title !== title);
@@ -47,6 +47,8 @@ function App() {
   // Generate JSX string for preview
   const PropsString = propertiesList
     .map((property) =>
+      property.title === 'UserPrimaryTicksComponent' || property.title === 'UserMajorTicksComponent'
+    ?  `${property.title}={<Component />}` :
       property.title === 'clockLogoSrcAndOffset'
         ? `${property.title}={{ cmp: <Component />, offset: ${(property.value as { offset: number }).offset
         } }} `
@@ -57,13 +59,16 @@ function App() {
 
   return (
     <AppWrapper>
-      <ClockWrapper>
-        {isAnalogClockProps(dynamicProps) && <Clock {...dynamicProps} />}
-        {isDigitalClockProps(dynamicProps) && <Clock {...dynamicProps} />}
-      </ClockWrapper>
-      <CodeViewWrapper>
-        {`<Clock ${PropsString} />`}
-      </CodeViewWrapper>
+      <ClockAndCodeWrapper>
+        <ClockWrapper>
+          {isAnalogClockProps(dynamicProps) && <Clock {...dynamicProps} />}
+          {isDigitalClockProps(dynamicProps) && <Clock {...dynamicProps} />}
+        </ClockWrapper>
+        <CodeViewWrapper>
+          {`<Clock ${PropsString} />`}
+        </CodeViewWrapper>
+      </ClockAndCodeWrapper>
+
       <PropertiesWrapper>
         {/* Other Properties */}
         <PropertySelect
@@ -78,8 +83,8 @@ function App() {
           title="analog color theme mode"
           addProperty={addPropertyHandle}
           optionsList={[
-            { optionName: 'LIGHT', optionValue: 'LIGHT', hasIcon: false },
             { optionName: 'DARK', optionValue: 'DARK', hasIcon: false },
+            { optionName: 'LIGHT', optionValue: 'LIGHT', hasIcon: false },
             { optionName: 'BLUE_DARK', optionValue: 'BLUE_DARK', hasIcon: false },
             { optionName: 'RED_DARK', optionValue: 'RED_DARK', hasIcon: false },
             { optionName: 'AUTUMN', optionValue: 'AUTUMN', hasIcon: false },
@@ -100,6 +105,46 @@ function App() {
           optionsList={[
             { optionName: 'ENGLISH', optionValue: 'ENGLISH', hasIcon: false },
             { optionName: 'ROMAN', optionValue: 'ROMAN', hasIcon: false },
+          ]}
+        />
+        <PropertySelect
+          title="major numbers font size"
+          addProperty={addPropertyHandle}
+          optionsList={[
+            { optionName: 'eleven', optionValue: 0.11, hasIcon: false },
+            { optionName: 'fourteen', optionValue: 0.14, hasIcon: false },
+            { optionName: 'sixteen', optionValue: 0.16, hasIcon: false },
+            { optionName: 'eighteen', optionValue: 0.18, hasIcon: false },
+          ]}
+        />
+        <PropertySelect
+          title="primary numbers font size"
+          addProperty={addPropertyHandle}
+          optionsList={[
+            { optionName: 'eleven', optionValue: 0.11, hasIcon: false },
+            { optionName: 'fourteen', optionValue: 0.14, hasIcon: false },
+            { optionName: 'sixteen', optionValue: 0.16, hasIcon: false },
+            { optionName: 'eighteen', optionValue: 0.18, hasIcon: false },
+          ]}
+        />
+        <PropertySelect
+          title="primary numbers color"
+          addProperty={addPropertyHandle}
+          optionsList={[
+            { optionName: 'white', optionValue: '#FFFFFF', hasIcon: false },
+            { optionName: 'red', optionValue: '#e6272d', hasIcon: false },
+            { optionName: 'blue', optionValue: '#126ae6', hasIcon: false },
+            { optionName: 'green', optionValue: '#03fc62', hasIcon: false },
+          ]}
+        />
+                <PropertySelect
+          title="major numbers color"
+          addProperty={addPropertyHandle}
+          optionsList={[
+            { optionName: 'white', optionValue: '#FFFFFF', hasIcon: false },
+            { optionName: 'red', optionValue: '#e6272d', hasIcon: false },
+            { optionName: 'blue', optionValue: '#126ae6', hasIcon: false },
+            { optionName: 'green', optionValue: '#03fc62', hasIcon: false },
           ]}
         />
         {/* Special Handling for clockLogoSrcAndOffset */}
@@ -209,6 +254,114 @@ function App() {
               }}}
           >
             show / hide Major Numbers
+          </PrpertyButtonWrapper>
+        </PropertyContainer>
+        <PropertyContainer>
+          <label>
+            clock logo component
+          </label>
+          <PrpertyButtonWrapper
+            onClick={() => {
+              if (propertiesList.find(prop => prop.title === 'UserPrimaryTicksComponent')) {
+                setPropertiesList([...propertiesList.filter(prop => prop.title !== 'UserPrimaryTicksComponent')])
+              } else {
+                addPropertyHandle({
+                  title: 'UserPrimaryTicksComponent',
+                  value: <div style={{width: '10px', borderRadius: '50%', backgroundColor: '#fc0dfc'}}></div>,
+                })
+              }}}
+          >
+            Add / Remove primary Tick CMP
+          </PrpertyButtonWrapper>
+        </PropertyContainer>
+        <PropertyContainer>
+          <label>
+            clock logo component
+          </label>
+          <PrpertyButtonWrapper
+            onClick={() => {
+              if (propertiesList.find(prop => prop.title === 'UserMajorTicksComponent')) {
+                setPropertiesList([...propertiesList.filter(prop => prop.title !== 'UserMajorTicksComponent')])
+              } else {
+                addPropertyHandle({
+                  title: 'UserMajorTicksComponent',
+                  value: <div style={{width: '7px', borderRadius: '50%', backgroundColor: '#8f2af5'}}></div>,
+                })
+              }}}
+          >
+            Add / Remove Major Tick CMP
+          </PrpertyButtonWrapper>
+        </PropertyContainer>
+        <PropertyContainer>
+          <label>
+          user minor ticks component
+          </label>
+          <PrpertyButtonWrapper
+            onClick={() => {
+              if (propertiesList.find(prop => prop.title === 'UserMinorTicksComponent')) {
+                setPropertiesList([...propertiesList.filter(prop => prop.title !== 'UserMinorTicksComponent')])
+              } else {
+                addPropertyHandle({
+                  title: 'UserMinorTicksComponent',
+                  value: <div style={{width: '7px', borderRadius: '50%', backgroundColor: '#8f2af5'}}></div>,
+                })
+              }}}
+          >
+            Add / Remove Minor Tick CMP
+          </PrpertyButtonWrapper>
+        </PropertyContainer>
+        <PropertyContainer>
+          <label>
+          primary numbers component
+          </label>
+          <PrpertyButtonWrapper
+            onClick={() => {
+              if (propertiesList.find(prop => prop.title === 'PrimaryNumbersComponent')) {
+                setPropertiesList([...propertiesList.filter(prop => prop.title !== 'PrimaryNumbersComponent')])
+              } else {
+                addPropertyHandle({
+                  title: 'PrimaryNumbersComponent',
+                  value: <div style={{width: '17px', borderRadius: '50%', backgroundColor: '#8f2af5'}}></div>,
+                })
+              }}}
+          >
+            Add / Remove Primary Numbers CMP
+          </PrpertyButtonWrapper>
+        </PropertyContainer>
+        <PropertyContainer>
+          <label>
+          major numbers component
+          </label>
+          <PrpertyButtonWrapper
+            onClick={() => {
+              if (propertiesList.find(prop => prop.title === 'MajorNumbersComponent')) {
+                setPropertiesList([...propertiesList.filter(prop => prop.title !== 'MajorNumbersComponent')])
+              } else {
+                addPropertyHandle({
+                  title: 'MajorNumbersComponent',
+                  value: <div style={{width: '17px', borderRadius: '50%', backgroundColor: '#8f2af5'}}></div>,
+                })
+              }}}
+          >
+            Add / Remove Major Numbers CMP
+          </PrpertyButtonWrapper>
+        </PropertyContainer>
+        <PropertyContainer>
+          <label>
+          clock center component
+          </label>
+          <PrpertyButtonWrapper
+            onClick={() => {
+              if (propertiesList.find(prop => prop.title === 'ClockCenterComponent')) {
+                setPropertiesList([...propertiesList.filter(prop => prop.title !== 'ClockCenterComponent')])
+              } else {
+                addPropertyHandle({
+                  title: 'ClockCenterComponent',
+                  value: <div style={{width: '20px', borderRadius: '50%', backgroundColor: '#8f2af5'}}></div>,
+                })
+              }}}
+          >
+            Add / Remve clock center CMP
           </PrpertyButtonWrapper>
         </PropertyContainer>
       </PropertiesWrapper>

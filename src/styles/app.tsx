@@ -9,37 +9,52 @@ const AppWrapper = styled.div({
     width: '100%',
     maxWidth: '100%',
     minWidth: '100%',
-    paddingTop: '2rem',
-    marginBottom: '15rem'
+    position: 'relative'
 })
 
 export default AppWrapper
+
+export const ClockAndCodeWrapper = styled.div({
+    boxSizing: 'border-box',
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    gap: '1rem',
+    paddingBottom: '1rem',
+    alignItems: 'center',
+    width: '100%',
+    maxWidth: '100%',
+    minWidth: '100%',
+    minHeight: '28rem',
+    position: 'absolute',
+    top: 0,
+    backgroundColor: 'white',
+    zIndex: 3
+})
 
 export const ClockWrapper = styled.div({
     boxSizing: 'border-box',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '23rem',
-    maxWidth: '23rem',
-    minWidth: '23rem',
-    minHeight: '23rem'
+    width: '28rem',
+    maxWidth: '28rem',
+    minWidth: '15rem',
+    minHeight: '15rem',
 })
 
 export const CodeViewWrapper = styled.div({
     boxSizing: 'border-box',
-    marginTop: '2rem',
     padding: '2rem',
     borderRadius: '1.5rem',
     backgroundColor: 'black',
     color: 'white',
-    fontSize: '1.5rem',
-    width: '70%',
-    minWidth: '25rem',
-    maxWidth: '70%',
-    height: '10rem',
-    minHeight: '10rem',
-    maxHeight: '10rem',
+    fontSize: '0.875rem',
+    width: '35rem',
+    minWidth: '18rem',
+    maxWidth: '35rem',
+    height: '28rem',
+    minHeight: '28rem',
+    maxHeight: '28rem',
 })
 
 export const PropertiesWrapper = styled.div({
@@ -47,27 +62,28 @@ export const PropertiesWrapper = styled.div({
     width: '100%',
     minWidth: '100%',
     maxWidth: '100%',
-    paddingInline: '2rem',
-    marginTop: '1.5rem',
+    maxHeight: '100vh',
     display: 'flex',
     flexWrap: 'wrap',
     gap: '0.6rem',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    alignContent: 'flex-start',
+    paddingTop: '32rem',
+    overflowY: 'auto'
 })
 
 export const PropertyContainer = styled.div({
     boxSizing: 'border-box',
-    width: '32.69%',
-    minWidth: '32.69%',
-    maxWidth: '32.69%',
-    minHeight: '5rem',
+    width: '20rem',
+    minWidth: '18rem',
+    maxWidth: '35rem',
+    minHeight: '3rem',
     display: 'flex',
     flexDirection: 'column',
     gap: '0.3rem',
-    marginBottom: '0.7rem',
     '> .title': {
-        fontSize: '1.2rem',
+        fontSize: '0.875rem',
         fontWeight: 500,
         color: 'black'
     }
@@ -79,14 +95,14 @@ export const PropertyWrapper = styled.div({
     width: '100%',
     minWidth: '100%',
     maxWidth: '100%',
-    minHeight: '4rem',
+    minHeight: '2rem',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
     border: '1px solid #989a9c',
     borderRadius: '2rem',
-    fontSize: '1.2rem',
+    fontSize: '0.875rem',
     fontWeight: 600,
     cursor: 'pointer'
 })
@@ -105,10 +121,11 @@ export const PropertyDropDownWrapper = styled.div<PropertyDropDownWrapperProps>(
         height: 'max-ontent',
         minHeight: 'max-ontent',
         maxHeight: 'max-ontent',
-        top: '4.2rem',
+        top: '2.2rem',
         left: 0,
-        borderRadius: '2rem',
-        backgroundColor: 'transparent',
+        borderRadius: '1rem',
+        padding: '0.25rem',
+        backgroundColor: '#d2d4d6',
         zIndex: 2,
         display: show ? 'flex' : 'none',
         flexDirection: 'column',
@@ -126,14 +143,14 @@ export const PropertyOptionWrapper = styled.div<PropertyOptionWrapperProps>(({ha
         width: '100%',
         minWidth: '100%',
         maxWidth: '100%',
-        paddingBlock: '1.2rem',
+        paddingBlock: '0.3rem',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgb(242, 244, 247)',
         borderRadius: '2rem',
         border: '1px solid #bbbdbf',
-        fontSize: '1.2rem',
+        fontSize: '0.875rem',
         fontWeight: 600
     }
 })
@@ -153,17 +170,18 @@ export const SelectedOptionWrapper = styled.div({
 
 export const PrpertyButtonWrapper = styled.div({
     boxSizing: 'border-box',
-    width: '100%',
-    minWidth: '100%',
-    maxWidth: '100%',
-    minHeight: '4rem',
+    width: '20rem',
+    minWidth: '18rem',
+    maxWidth: '35rem',
+    minHeight: '2rem',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
     border: '1px solid #989a9c',
     borderRadius: '2rem',
-    fontSize: '1.2rem',
+    fontSize: '0.875rem',
     fontWeight: 600,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    backgroundColor: '#ceeecc'
 })

@@ -59,7 +59,7 @@ const PropertySelect: FC<PropertySelectProps> = ({ optionsList, title, addProper
                         : null
                     }
                     {selectedOption.optionValue}
-                    <Icon iconName={`${showOptions ? 'arrowUp' : 'arrowDown'}`} size='2.5' style={{ position: "absolute", right: '2%' }} />
+                    <Icon iconName={`${showOptions ? 'arrowUp' : 'arrowDown'}`} size='2' style={{ position: "absolute", right: '2%' }} />
 
                 </SelectedOptionWrapper>
                 <PropertyDropDownWrapper show={showOptions}>
