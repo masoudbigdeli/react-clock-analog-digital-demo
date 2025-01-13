@@ -24,11 +24,12 @@ export const ClockAndCodeWrapper = styled.div({
     width: '100%',
     maxWidth: '100%',
     minWidth: '100%',
-    minHeight: '28rem',
+    minHeight: '20rem',
     position: 'absolute',
     top: 0,
     backgroundColor: 'white',
-    zIndex: 3
+    zIndex: 3,
+    
 })
 
 export const ClockWrapper = styled.div({
@@ -36,8 +37,8 @@ export const ClockWrapper = styled.div({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '28rem',
-    maxWidth: '28rem',
+    width: '20rem',
+    maxWidth: '20rem',
     minWidth: '15rem',
     minHeight: '15rem',
 })
@@ -52,9 +53,9 @@ export const CodeViewWrapper = styled.div({
     width: '35rem',
     minWidth: '18rem',
     maxWidth: '35rem',
-    height: '28rem',
-    minHeight: '28rem',
-    maxHeight: '28rem',
+    height: '20rem',
+    minHeight: '20rem',
+    maxHeight: '20rem',
 })
 
 export const PropertiesWrapper = styled.div({
@@ -63,14 +64,24 @@ export const PropertiesWrapper = styled.div({
     minWidth: '100%',
     maxWidth: '100%',
     maxHeight: '100vh',
+    paddingTop: '21rem',
+})
+
+export const PropertiesInnerWrapper = styled.div({
+    boxSizing: 'border-box',
+    width: '100%',
+    minWidth: '100%',
+    maxWidth: '100%',
+    height: 'calc(100vh - 32rem)',
+    maxHeight: 'calc(100vh - 32rem)',
+    minHeight: 'calc(100vh - 32rem)',
     display: 'flex',
     flexWrap: 'wrap',
     gap: '0.6rem',
     justifyContent: 'flex-start',
     alignItems: 'center',
     alignContent: 'flex-start',
-    paddingTop: '32rem',
-    overflowY: 'auto'
+    overflowY: 'auto',
 })
 
 export const PropertyContainer = styled.div({

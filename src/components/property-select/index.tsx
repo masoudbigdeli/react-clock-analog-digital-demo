@@ -7,6 +7,7 @@ import { wordWithSpacesToCamelcaseConvertor } from "../../utils/word-with-spaces
 interface OptionBaseProps extends PropertyOptionWrapperProps {
     optionName: string
     optionValue: any
+    
 }
 
 interface OptionWithIcon extends Omit<OptionBaseProps, 'hasIcon'> {
@@ -28,12 +29,14 @@ export type Option = OptionWithIcon | OptionWithoutIcon
 interface PropertySelectProps {
     title: string
     optionsList: Array<Option>
-    addProperty: (property: { title: string, value: string | number }) => void
+    addProperty: (property: { title: string, propType: 'option'| 'toggle', value: string | number }) => void
 }
 
 const PropertySelect: FC<PropertySelectProps> = ({ optionsList, title, addProperty }) => {
     const [showOptions, setShowOptions] = useState<boolean>(false)
     const [selectedOption, setSelectedOption] = useState<Option>(optionsList[0])
+
+    console.log('title:', title)
 
     const handleOpen = useCallback(() => {
         setShowOptions(prevState => !prevState)
@@ -41,7 +44,7 @@ const PropertySelect: FC<PropertySelectProps> = ({ optionsList, title, addProper
 
     const handleOptionSelect = useCallback((option: Option) => {
         const propertyTitle = wordWithSpacesToCamelcaseConvertor(title)
-        addProperty({ title: propertyTitle, value: option.optionValue })
+        addProperty({ title: propertyTitle, propType: 'option', value: option.optionValue })
         setSelectedOption(option)
     }, [])
 

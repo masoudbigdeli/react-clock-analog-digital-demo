@@ -55,7 +55,6 @@ export interface DigitalClockProps extends ClockBaseProps {
     inactiveSegmentColor? : string
     dotsColor?: string
     digitalClockLogoComponent?: React.ReactNode;
-
 }
 
 export type ClockProps = AnalogClockProps | DigitalClockProps;
