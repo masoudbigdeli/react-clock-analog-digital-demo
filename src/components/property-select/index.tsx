@@ -36,8 +36,6 @@ const PropertySelect: FC<PropertySelectProps> = ({ optionsList, title, addProper
     const [showOptions, setShowOptions] = useState<boolean>(false)
     const [selectedOption, setSelectedOption] = useState<Option>(optionsList[0])
 
-    console.log('title:', title)
-
     const handleOpen = useCallback(() => {
         setShowOptions(prevState => !prevState)
     }, [])
@@ -68,7 +66,7 @@ const PropertySelect: FC<PropertySelectProps> = ({ optionsList, title, addProper
                 <PropertyDropDownWrapper show={showOptions}>
                     {
                         optionsList.map((option, index) => (
-                            <PropertyOptionWrapper hasIcon={option.hasIcon} key={index} onClick={() => handleOptionSelect(option)}>
+                            <PropertyOptionWrapper key={index} onClick={() => handleOptionSelect(option)}>
                                 {(option.icon && option.iconName)
                                     ? <Icon
                                         iconName={option.iconName}

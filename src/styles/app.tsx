@@ -312,12 +312,10 @@ export const PropertyDropDownWrapper = styled.div<PropertyDropDownWrapperProps>(
     }
 })
 
-export interface PropertyOptionWrapperProps {
-    hasIcon: boolean
-}
 
-export const PropertyOptionWrapper = styled.div<PropertyOptionWrapperProps>(({hasIcon}) => {
-    return {
+
+export const PropertyOptionWrapper = styled.div({
+
         boxSizing: 'border-box',
         width: '100%',
         minWidth: '100%',
@@ -331,7 +329,6 @@ export const PropertyOptionWrapper = styled.div<PropertyOptionWrapperProps>(({ha
         border: '1px solid #bbbdbf',
         fontSize: '0.875rem',
         fontWeight: 600
-    }
 })
 
 export const SelectedOptionWrapper = styled.div({
