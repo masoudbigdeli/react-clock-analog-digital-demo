@@ -53,3 +53,17 @@ export const generatePropsStringWithoutStyle = (propertiesList: Array<{ title: s
     .join('')
     return propsString
 }
+
+
+interface Props {
+  htmlString: string;  
+}
+
+export const RenderHtmlComponent: React.FC<Props> = ({ htmlString }) => {
+  if (typeof htmlString !== 'string') {
+    console.error('htmlString is not a string!');
+    return null;
+  }
+  return (<span dangerouslySetInnerHTML={{__html: htmlString,}}></span>
+  );
+};

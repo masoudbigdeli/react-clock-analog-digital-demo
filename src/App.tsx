@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import Clock from 'clock-analog-digital-react';
 import { ClockProps } from './models/clockInterfaces';
-import { generatePropsString, generatePropsStringWithoutStyle, isAnalogClockProps, isDigitalClockProps } from './utils/clock-utils';
+import { RenderHtmlComponent, generatePropsString, generatePropsStringWithoutStyle, isAnalogClockProps, isDigitalClockProps } from './utils/clock-utils';
 import AppWrapper, { ClockAndCodeWrapper, ClockWrapper, CodeCopyButton, CodeViewWrapper, InstructionsWrapper, PropertiesInnerWrapper, PropertiesWrapper, TopRightContainer } from './styles/app';
 import PropertySelect from './components/property-select';
 import PropertyButton from './components/property-button';
@@ -53,22 +53,7 @@ function App() {
 
   const codeToCopy = useMemo(() => `<Clock ${generatePropsStringWithoutStyle(propertiesList)} \n/>`, [propertiesList])
   const PropsString = useMemo(() => generatePropsString(propertiesList), [propertiesList])
-
-  interface Props {
-    htmlString: string;  // Make sure the type is string
-  }
   
-  const RenderHtmlComponent: React.FC<Props> = ({ htmlString }) => {
-    if (typeof htmlString !== 'string') {
-      console.error('htmlString is not a string!');
-      return null;
-    }
-    return (<span dangerouslySetInnerHTML={{__html: htmlString,}}></span>
-    );
-  };
-  
-  
-
   return (
     <AppWrapper>
       <ClockAndCodeWrapper>
