@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import Clock from 'clock-analog-digital-react';
 import SmileLogo from '../public/smile-logo.png'
 
-import { ClockProps, AnalogClockProps, DigitalClockProps } from './models/clockInterfaces';
-import { generatePropsString, isAnalogClockProps, isDigitalClockProps } from './utils/clock-utils';
-import AppWrapper, { ClockAndCodeWrapper, ClockWrapper, CodeViewWrapper, PropertiesInnerWrapper, PropertiesWrapper } from './styles/app';
+import { ClockProps } from './models/clockInterfaces';
+import { generatePropsString, generatePropsStringWithoutStyle, isAnalogClockProps, isDigitalClockProps } from './utils/clock-utils';
+import AppWrapper, { ClockAndCodeWrapper, ClockWrapper, CodeCopyButton, CodeViewWrapper, InstructionsWrapper, PropertiesInnerWrapper, PropertiesWrapper, TopRightContainer } from './styles/app';
 import PropertySelect from './components/property-select';
 import Icon from './icons/icon';
 import PropertyButton from './components/property-button';
@@ -13,6 +13,25 @@ function App() {
   const [propertiesList, setPropertiesList] = useState<
     Array<{ title: keyof ClockProps; value: any, propType: "option" | "toggle" }>
   >([{ title: 'clockMode', value: 'analog', propType: "option" }]);
+  const [copied, setCopied] = useState(false);
+
+  const resetPropsList = useCallback(() => {
+    setPropertiesList((prevPropertiesList) => {
+      if(prevPropertiesList.find(prop => prop.value === 'analog')) return [{ title: 'clockMode', value: 'analog', propType: "option" }]
+      if(prevPropertiesList.find(prop => prop.value === 'digital')) return [{ title: 'clockMode', value: 'digital', propType: "option" }]
+    })
+  },[])
+
+  const hanldeCopyCode = async () => {
+    try {
+      await navigator.clipboard.writeText(codeToCopy);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000); 
+    } catch (err) {
+      console.error('Failed to copy text:', err);
+      setCopied(false);
+    }
+  }
 
   const dynamicProps = propertiesList.reduce((acc, property) => {
     acc[property.title] = property.value as any;
@@ -35,7 +54,26 @@ function App() {
     []
   );
 
-  const PropsString = generatePropsString(propertiesList);
+  const codeToCopy = useMemo(() => `<Clock ${generatePropsStringWithoutStyle(propertiesList)} \n/>`, [propertiesList])
+  const PropsString = useMemo(() => generatePropsString(propertiesList), [propertiesList])
+
+  console.log('list:',propertiesList)
+  console.log('code to copy:',codeToCopy)
+
+  interface Props {
+    htmlString: string;  // Make sure the type is string
+  }
+  
+  const RenderHtmlComponent: React.FC<Props> = ({ htmlString }) => {
+    if (typeof htmlString !== 'string') {
+      console.error('htmlString is not a string!');
+      return null;
+    }
+    return (<span dangerouslySetInnerHTML={{__html: htmlString,}}></span>
+    );
+  };
+  
+  
 
   return (
     <AppWrapper>
@@ -44,9 +82,20 @@ function App() {
           {isAnalogClockProps(dynamicProps) && <Clock {...dynamicProps} />}
           {isDigitalClockProps(dynamicProps) && <Clock {...dynamicProps} />}
         </ClockWrapper>
-        <CodeViewWrapper>
-          {`<Clock ${PropsString} />`}
+        <TopRightContainer>
+        <InstructionsWrapper>
+          <div className='text'>Install package: <span style={{fontWeight: 600}}>npm i clock-analog-digital-react</span></div>
+          <div className='text'>Import in your project: <span style={{fontWeight: 600}}>import Clock from 'clock-analog-digital-react'</span></div>
+          <div className='text'>Now use the package with desired props.</div>
+          <div className='text'>You can select your custom properties from below list and copy and past configured Clock component into your code!</div>
+        </InstructionsWrapper>
+        <CodeViewWrapper>{'<Clock'}<RenderHtmlComponent htmlString={PropsString} /> 
+        {'\n/>'}
+        <CodeCopyButton onClick={resetPropsList} right={2}>Reset</CodeCopyButton>
+        <CodeCopyButton onClick={hanldeCopyCode} right={5.7}>{copied ? 'Copied!' : 'Copy'}</CodeCopyButton>
         </CodeViewWrapper>
+
+        </TopRightContainer>
       </ClockAndCodeWrapper>
 
       <PropertiesWrapper>
@@ -56,10 +105,9 @@ function App() {
             addProperty={addPropertyHandle}
             optionsList={[
               { optionName: 'analog', optionValue: 'analog', hasIcon: false },
-              { optionName: 'digital', optionValue: 'digital', hasIcon: true, icon: Icon, iconName: 'circleInfo' },
+              { optionName: 'digital', optionValue: 'digital', hasIcon: false },
             ]}
           />
-
           {dynamicProps.clockMode === 'analog' && (
             <>
               <PropertySelect
@@ -74,7 +122,7 @@ function App() {
                 ]}
               />
               <PropertySelect
-                title="clock border thickness"
+                title="clock border thikness"
                 addProperty={addPropertyHandle}
                 optionsList={[
                   { optionName: 'Thick', optionValue: 2, hasIcon: false },
@@ -226,7 +274,7 @@ function App() {
                 toggleValue={(currentValue) =>
                   currentValue
                     ? undefined
-                    : <div style={{ width: '13px', height: '13px', borderRadius: '10px', backgroundColor: 'red' }}></div>
+                    : <div style={{ width: '5px', height: '7px', borderRadius: '10px', backgroundColor: 'red' }}></div>
                 }
               />
               <PropertyButton
@@ -248,7 +296,7 @@ function App() {
                 toggleValue={(currentValue) =>
                   currentValue
                     ? undefined
-                    : <div style={{ width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#e0560b' }}></div>
+                    : <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#e0560b' }}></div>
                 }
               />
               <PropertyButton

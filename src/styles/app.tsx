@@ -28,8 +28,7 @@ export const ClockAndCodeWrapper = styled.div({
     position: 'absolute',
     top: 0,
     backgroundColor: 'white',
-    zIndex: 3,
-    
+    zIndex: 3
 })
 
 export const ClockWrapper = styled.div({
@@ -43,35 +42,170 @@ export const ClockWrapper = styled.div({
     minHeight: '15rem',
 })
 
-export const CodeViewWrapper = styled.div({
+export const TopRightContainer = styled.div({
     boxSizing: 'border-box',
-    padding: '2rem',
-    borderRadius: '1.5rem',
-    backgroundColor: 'black',
-    color: 'white',
-    fontSize: '0.875rem',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'relative',
     width: '35rem',
     minWidth: '18rem',
     maxWidth: '35rem',
     height: '20rem',
     minHeight: '20rem',
     maxHeight: '20rem',
+
+})
+
+export const InstructionsWrapper = styled.div({
+    boxSizing: 'border-box',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.5rem',
+    width: '100%',
+    minWidth: '100%',
+    maxWidth: '100%',
+    height: '47%',
+    minHeight: '47%',
+    maxHeight: '47%',
+    backgroundColor: '#dfe6f5',
+    paddingInline: '1.25rem',
+    paddingBlock: '1rem',
+    borderRadius: '1.5rem',
+    overflow: 'scroll',
+    '&::-webkit-scrollbar': {
+        width: '0.2rem',
+        backgroundColor: 'transparent',
+        borderRadius: '0.5rem',
+        paddingRight: '10rem'
+    },
+    '&::-webkit-scrollbar-track': {
+        backgroundColor: 'transparent',
+        borderRadius: '0.5rem',
+    },
+    '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'transparent',
+        borderRadius: '0.5rem',
+    },
+    ':hover': {
+        '&::-webkit-scrollbar': {
+            width: '0.2rem',
+            backgroundColor: 'transparent',
+            height: '95%',
+            borderRadius: '0.5rem',
+        },
+        '&::-webkit-scrollbar-track': {
+            backgroundColor: 'transparent',
+            height: '95%',
+            borderRadius: '0.5rem',
+        },
+        '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'grey',
+            borderRadius: '0.5rem',
+        },
+    },
+    '> .text':{
+        fontSize: '0.9rem',
+        fontWeight: 400,
+        color: '#0e1d3b'
+    }
+})
+
+export const CodeViewWrapper = styled.pre({
+    boxSizing: 'border-box',
+    padding: '1.5rem',
+    paddingBottom: '2.5rem',
+    borderRadius: '1.5rem',
+    backgroundColor: '#0b0336',
+    color: 'white',
+    fontSize: '0.875rem',
+    width: '100%',
+    minWidth: '100%',
+    maxWidth: '100%',
+    height: '51%',
+    minHeight: '51%',
+    maxHeight: '51%',
+    overflow: 'scroll',
+    '&::-webkit-scrollbar': {
+        width: '0.2rem',
+        backgroundColor: 'transparent',
+        borderRadius: '0.5rem',
+        paddingRight: '10rem'
+    },
+    '&::-webkit-scrollbar-track': {
+        backgroundColor: 'transparent',
+        borderRadius: '0.5rem',
+    },
+    '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'transparent',
+        borderRadius: '0.5rem',
+    },
+    ':hover': {
+        '&::-webkit-scrollbar': {
+            width: '0.2rem',
+            backgroundColor: 'transparent',
+            height: '95%',
+            borderRadius: '0.5rem',
+        },
+        '&::-webkit-scrollbar-track': {
+            backgroundColor: 'transparent',
+            height: '95%',
+            borderRadius: '0.5rem',
+        },
+        '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'grey',
+            borderRadius: '0.5rem',
+        },
+    }
+})
+
+interface CodeCopyButtonProps {
+    right : number
+}
+
+export const CodeCopyButton = styled.div<CodeCopyButtonProps>(({right}) => {
+    return {
+        boxSizing: 'border-box',
+        width: '3.5',
+        minWidth: '3.5rem',
+        maxWidth: '3.5',
+        borderRadius: '2rem',
+        position: 'absolute',    
+        top: '17.8rem',
+        right: `${right}rem`,
+        height: '2rem',
+        backgroundColor: '#113680',
+        color: 'white',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        cursor: 'pointer',
+        zIndex: 4,
+        fontSize:'0.7rem',
+        '&:hover': {
+            backgroundColor: '#1548ad',
+    
+        }
+    }
+
 })
 
 export const PropertiesWrapper = styled.div({
     boxSizing: 'border-box',
-    width: '100%',
-    minWidth: '100%',
-    maxWidth: '100%',
+    width: '90%',
+    minWidth: '90%',
+    maxWidth: '90%',
     maxHeight: '100vh',
-    paddingTop: '21rem',
+    paddingTop: '24rem',
 })
 
 export const PropertiesInnerWrapper = styled.div({
     boxSizing: 'border-box',
-    width: '100%',
-    minWidth: '100%',
-    maxWidth: '100%',
+    width: '90%',
+    minWidth: '90%',
+    maxWidth: '90%',
+    marginInline: 'auto',
     height: 'calc(100vh - 32rem)',
     maxHeight: 'calc(100vh - 32rem)',
     minHeight: 'calc(100vh - 32rem)',
@@ -82,23 +216,57 @@ export const PropertiesInnerWrapper = styled.div({
     alignItems: 'center',
     alignContent: 'flex-start',
     overflowY: 'auto',
+    '&::-webkit-scrollbar': {
+        width: '0.2rem',
+        backgroundColor: 'transparent',
+        borderRadius: '0.5rem',
+        paddingRight: '10rem'
+    },
+    '&::-webkit-scrollbar-track': {
+        backgroundColor: 'transparent',
+        borderRadius: '0.5rem',
+    },
+    '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'transparent',
+        borderRadius: '0.5rem',
+    },
+    ':hover': {
+        '&::-webkit-scrollbar': {
+            width: '0.2rem',
+            backgroundColor: 'transparent',
+            height: '95%',
+            borderRadius: '0.5rem',
+        },
+        '&::-webkit-scrollbar-track': {
+            backgroundColor: 'transparent',
+            height: '95%',
+            borderRadius: '0.5rem',
+        },
+        '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'grey',
+            borderRadius: '0.5rem',
+        },
+    }
 })
 
 export const PropertyContainer = styled.div({
     boxSizing: 'border-box',
-    width: '20rem',
-    minWidth: '18rem',
-    maxWidth: '35rem',
+    width: '15rem',
+    minWidth: '15rem',
+    maxWidth: '15rem',
     minHeight: '3rem',
     display: 'flex',
     flexDirection: 'column',
     gap: '0.3rem',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
     '> .title': {
         fontSize: '0.875rem',
         fontWeight: 500,
-        color: 'black'
+        color: 'black',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
     }
-
 })
 
 export const PropertyWrapper = styled.div({
@@ -181,9 +349,9 @@ export const SelectedOptionWrapper = styled.div({
 
 export const PrpertyButtonWrapper = styled.div({
     boxSizing: 'border-box',
-    width: '20rem',
-    minWidth: '18rem',
-    maxWidth: '35rem',
+    width: '15rem',
+    minWidth: '15rem',
+    maxWidth: '15rem',
     minHeight: '2rem',
     display: 'flex',
     justifyContent: 'center',
