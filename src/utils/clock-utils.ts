@@ -26,9 +26,10 @@ export const generatePropsString = (propertiesList: Array<{ title: string, value
         || property.title === "PrimaryNumbersComponent"
         || property.title === "MajorNumbersComponent"
         || property.title === "ClockCenterComponent"
-        || property.title === "clockLogoSrcAndOffset" 
         || property.title === "digitalClockLogoComponent"
         ? `\n\t<span class="key">${property.title}</span> = <span class="value">{&lt${property.title} /&gt}</span>`
+        : property.title === "clockLogoSrcAndOffset" 
+        ? `\n\t<span class="key">${property.title}</span> = <span class="value">{{cmp : &ltLogoComponent /&gt, offset: {number}}}</span>`
         : `\n\t<span class="key">${property.title}</span> = <span class="value">${typeof property.value === 'string' ? `'${property.value}'` : `{${property.value}}`}</span>`
     )
     .join('')
@@ -43,11 +44,11 @@ export const generatePropsStringWithoutStyle = (propertiesList: Array<{ title: s
         || property.title === "UserMinorTicksComponent"
         || property.title === "PrimaryNumbersComponent"
         || property.title === "MajorNumbersComponent"
-        || property.title === "ClockCenterComponent"
-        || property.title === "clockLogoSrcAndOffset" 
+        || property.title === "ClockCenterComponent" 
         || property.title === "digitalClockLogoComponent"
         ? `\n\t${property.title} = {<${property.title} />}`
         : `\n\t${property.title} = ${typeof property.value === 'string' ? `'${property.value}'` : `{${property.value}}`}`
+
     )
     .join('')
     return propsString
