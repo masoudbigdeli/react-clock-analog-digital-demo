@@ -12,7 +12,7 @@ export const analogPropertySelectData = [
       ],
     },
     {
-      title: "clock border thikness",
+      title: "clock border thickness",
       optionsList: [
         { optionName: 'Thick', optionValue: 2, hasIcon: false },
         { optionName: 'Thin', optionValue: 0.5, hasIcon: false },
