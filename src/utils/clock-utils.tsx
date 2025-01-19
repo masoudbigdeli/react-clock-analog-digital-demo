@@ -30,6 +30,8 @@ export const generatePropsString = (propertiesList: Array<{ title: string, value
         ? `\n\t<span class="key">${property.title}</span> = <span class="value">{&lt${property.title} /&gt}</span>`
         : property.title === "clockLogoSrcAndOffset" 
         ? `\n\t<span class="key">${property.title}</span> = <span class="value">{{cmp : &ltLogoComponent /&gt, offset: {number}}}</span>`
+        : property.title === "hasAlarm" 
+        ? `\n\t<span class="key">${property.title}</span> = <span class="value">{${property.value}}</span>` + `\n\t<span class="key">onAlarm</span> = <span class="value">{userOnAlarmFunctionDefinition}</span>`
         : `\n\t<span class="key">${property.title}</span> = <span class="value">${typeof property.value === 'string' ? `'${property.value}'` : `{${property.value}}`}</span>`
     )
     .join('')

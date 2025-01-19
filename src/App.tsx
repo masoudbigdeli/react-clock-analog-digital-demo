@@ -15,16 +15,16 @@ function App() {
 
   const resetPropsList = useCallback(() => {
     setPropertiesList((prevPropertiesList) => {
-      if(prevPropertiesList.find(prop => prop.value === 'analog')) return [{ title: 'clockMode', value: 'analog', propType: "option" }]
-      if(prevPropertiesList.find(prop => prop.value === 'digital')) return [{ title: 'clockMode', value: 'digital', propType: "option" }]
+      if (prevPropertiesList.find(prop => prop.value === 'analog')) return [{ title: 'clockMode', value: 'analog', propType: "option" }]
+      if (prevPropertiesList.find(prop => prop.value === 'digital')) return [{ title: 'clockMode', value: 'digital', propType: "option" }]
     })
-  },[])
+  }, [])
 
   const hanldeCopyCode = async () => {
     try {
       await navigator.clipboard.writeText(codeToCopy);
       setCopied(true);
-      setTimeout(() => setCopied(false), 3000); 
+      setTimeout(() => setCopied(false), 3000);
     } catch (err) {
       console.error('Failed to copy text:', err);
       setCopied(false);
@@ -53,7 +53,7 @@ function App() {
 
   const codeToCopy = useMemo(() => `<Clock ${generatePropsStringWithoutStyle(propertiesList)} \n/>`, [propertiesList])
   const PropsString = useMemo(() => generatePropsString(propertiesList), [propertiesList])
-  
+
   return (
     <AppWrapper>
       <ClockAndCodeWrapper>
@@ -62,17 +62,17 @@ function App() {
           {isDigitalClockProps(dynamicProps) && <Clock {...dynamicProps} />}
         </ClockWrapper>
         <TopRightContainer>
-        <InstructionsWrapper>
-          <div className='text'>Install package: <span style={{fontWeight: 600}}>npm i clock-analog-digital-react</span></div>
-          <div className='text'>Import in your project: <span style={{fontWeight: 600}}>import Clock from 'clock-analog-digital-react'</span></div>
-          <div className='text'>Now use the package with desired props.</div>
-          <div className='text'>You can select your custom properties from below list and copy and past configured Clock component into your code!</div>
-        </InstructionsWrapper>
-        <CodeViewWrapper>{'<Clock'}<RenderHtmlComponent htmlString={PropsString} /> 
-        {'\n/>'}
-        <CodeCopyButton onClick={resetPropsList} right={2}>Reset</CodeCopyButton>
-        <CodeCopyButton onClick={hanldeCopyCode} right={5.7}>{copied ? 'Copied!' : 'Copy'}</CodeCopyButton>
-        </CodeViewWrapper>
+          <InstructionsWrapper>
+            <div className='text'>Install package: <span style={{ fontWeight: 600 }}>npm i clock-analog-digital-react</span></div>
+            <div className='text'>Import in your project: <span style={{ fontWeight: 600 }}>import Clock from 'clock-analog-digital-react'</span></div>
+            <div className='text'>Now use the package with desired props.</div>
+            <div className='text'>You can select your custom properties from below list and copy and past configured Clock component into your code!</div>
+          </InstructionsWrapper>
+          <CodeViewWrapper>{'<Clock'}<RenderHtmlComponent htmlString={PropsString} />
+            {'\n/>'}
+            <CodeCopyButton onClick={resetPropsList} right={2}>Reset</CodeCopyButton>
+            <CodeCopyButton onClick={hanldeCopyCode} right={5.7}>{copied ? 'Copied!' : 'Copy'}</CodeCopyButton>
+          </CodeViewWrapper>
 
         </TopRightContainer>
       </ClockAndCodeWrapper>
@@ -87,16 +87,24 @@ function App() {
               { optionName: 'digital', optionValue: 'digital', hasIcon: false },
             ]}
           />
+          <PropertyButton
+            key='hasAlarm' 
+            title='has alarm'
+            propertyKey='hasAlarm'
+            addProperty={addPropertyHandle}
+            propertiesList={propertiesList}
+            toggleValue={(currentValue) => (currentValue ? undefined : true)}
+          />
           {dynamicProps.clockMode === 'analog' && (
             <>
               {analogPropertySelectData.map((property) => (
                 <PropertySelect
-                  key={property.title}  // Using the title as the unique key
+                  key={property.title}  
                   title={property.title}
                   addProperty={addPropertyHandle}
                   optionsList={property.optionsList}
                 />
-                ))
+              ))
               }
               {analogPropertyButtonData.map((property) => (
                 <PropertyButton
@@ -107,31 +115,31 @@ function App() {
                   propertiesList={propertiesList}
                   toggleValue={property.toggleValue}
                 />
-                ))
-                }
+              ))
+              }
             </>
           )}
 
           {dynamicProps.clockMode === 'digital' && (
             <>
-      {digitalPropertySelectData.map((property) => (
-        <PropertySelect
-          key={property.title}  // Using title as the unique key
-          title={property.title}
-          addProperty={addPropertyHandle}
-          optionsList={property.optionsList}
-        />
-      ))}
-      {digitalPropertyButtonData.map((property) => (
-        <PropertyButton
-          key={property.propertyKey}  // Using propertyKey as a unique key
-          title={property.title}
-          propertyKey={property.propertyKey}
-          addProperty={addPropertyHandle}
-          propertiesList={propertiesList}
-          toggleValue={property.toggleValue}
-        />
-      ))}
+              {digitalPropertySelectData.map((property) => (
+                <PropertySelect
+                  key={property.title}  // Using title as the unique key
+                  title={property.title}
+                  addProperty={addPropertyHandle}
+                  optionsList={property.optionsList}
+                />
+              ))}
+              {digitalPropertyButtonData.map((property) => (
+                <PropertyButton
+                  key={property.propertyKey}  // Using propertyKey as a unique key
+                  title={property.title}
+                  propertyKey={property.propertyKey}
+                  addProperty={addPropertyHandle}
+                  propertiesList={propertiesList}
+                  toggleValue={property.toggleValue}
+                />
+              ))}
             </>
           )}
         </PropertiesInnerWrapper>

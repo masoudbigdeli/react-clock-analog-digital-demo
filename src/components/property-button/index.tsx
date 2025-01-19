@@ -9,8 +9,8 @@ const PropertyButton = ({
 }: {
   title: string;
   propertyKey: string;
-  addProperty: (property: { title: string, propType: 'toggle' | 'option', value: any }) => void
-  propertiesList: Array<{ title: string, propType: 'toggle' | 'option', value: any }>;
+  addProperty: (property: { title: string, propType: 'toggle' | 'option' | 'setter', value: any }) => void
+  propertiesList: Array<{ title: string, propType: 'toggle' | 'option' | 'setter', value: any }>;
   toggleValue: (currentValue: any) => any;
 }) => {
   const currentProperty = propertiesList.find((prop) => prop.title === propertyKey);
