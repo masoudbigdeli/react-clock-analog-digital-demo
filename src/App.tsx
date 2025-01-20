@@ -9,16 +9,22 @@ import { analogPropertyButtonData, analogPropertySelectData, digitalPropertyButt
 
 function App() {
   const [propertiesList, setPropertiesList] = useState<
-    Array<{ title: keyof ClockProps; value: any, propType: "option" | "toggle" }>
+    Array<{ title: keyof ClockProps; value: any, propType: string }>
   >([{ title: 'clockMode', value: 'analog', propType: "option" }]);
   const [copied, setCopied] = useState(false);
 
   const resetPropsList = useCallback(() => {
     setPropertiesList((prevPropertiesList) => {
-      if (prevPropertiesList.find(prop => prop.value === 'analog')) return [{ title: 'clockMode', value: 'analog', propType: "option" }]
-      if (prevPropertiesList.find(prop => prop.value === 'digital')) return [{ title: 'clockMode', value: 'digital', propType: "option" }]
-    })
-  }, [])
+      if (prevPropertiesList.find((prop) => prop.value === 'analog')) {
+        return [{ title: 'clockMode', value: 'analog', propType: "option" }];
+      }
+      if (prevPropertiesList.find((prop) => prop.value === 'digital')) {
+        return [{ title: 'clockMode', value: 'digital', propType: "option" }];
+      }
+      return [{ title: 'clockMode', value: 'analog', propType: "option" }];
+    });
+  }, []);
+  
 
   const hanldeCopyCode = async () => {
     try {
@@ -32,24 +38,32 @@ function App() {
   }
 
   const dynamicProps = propertiesList.reduce((acc, property) => {
-    acc[property.title] = property.value as any;
+    if (property.title.includes('Color')) {
+      acc.colorConfiguration = acc.colorConfiguration || {};
+  
+      (acc.colorConfiguration as Record<string, any>)[property.title] = property.value;
+    } else {
+      acc[property.title] = property.value;
+    }
+  
     return acc;
   }, {} as Partial<ClockProps>);
-
+  
   const addPropertyHandle = useCallback(
-    (property: { title: string, propType: 'option' | 'toggle', value: any }) => {
+    (property: { title: string, propType: string, value: any }) => {
       const title = property.title as keyof ClockProps;
       setPropertiesList((prevPropertiesList) => {
         const updatedPropertiesList = title === 'clockMode'
-          ? [{ title, value: property.value }]
+          ? [{ title, value: property.value, propType: 'option' }] 
           : prevPropertiesList.find((prop) => prop.title === title) && property.propType !== 'option'
             ? [...prevPropertiesList.filter((prop) => prop.title !== title)]
-            : [...prevPropertiesList.filter((prop) => prop.title !== title), { title, value: property.value }];
+            : [...prevPropertiesList.filter((prop) => prop.title !== title), { title, value: property.value, propType: property.propType }];
         return updatedPropertiesList;
       });
     },
     []
   );
+  
 
   const codeToCopy = useMemo(() => `<Clock ${generatePropsStringWithoutStyle(propertiesList)} \n/>`, [propertiesList])
   const PropsString = useMemo(() => generatePropsString(propertiesList), [propertiesList])
@@ -83,8 +97,8 @@ function App() {
             title="clock mode"
             addProperty={addPropertyHandle}
             optionsList={[
-              { optionName: 'analog', optionValue: 'analog', hasIcon: false },
-              { optionName: 'digital', optionValue: 'digital', hasIcon: false },
+              { optionName: 'analog', optionValue: 'analog'},
+              { optionName: 'digital', optionValue: 'digital'},
             ]}
           />
           <PropertyButton

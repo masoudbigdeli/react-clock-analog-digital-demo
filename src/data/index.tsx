@@ -2,16 +2,6 @@ import SmileLogo from '../../public/smile-logo.png'
 
 export const analogPropertySelectData = [
   {
-    title: "analog color theme mode",
-    optionsList: [
-      { optionName: 'DARK', optionValue: 'DARK', hasIcon: false },
-      { optionName: 'LIGHT', optionValue: 'LIGHT', hasIcon: false },
-      { optionName: 'BLUE_DARK', optionValue: 'BLUE_DARK', hasIcon: false },
-      { optionName: 'RED_DARK', optionValue: 'RED_DARK', hasIcon: false },
-      { optionName: 'AUTUMN', optionValue: 'AUTUMN', hasIcon: false },
-    ],
-  },
-  {
     title: "clock border thickness",
     optionsList: [
       { optionName: 'Thick', optionValue: 2, hasIcon: false },
@@ -72,6 +62,26 @@ export const analogPropertySelectData = [
     title: "second hand color",
     optionsList: [],
   },
+  {
+    title: "primary ticks color",
+    optionsList: [],
+  },
+  {
+    title: "major ticks color",
+    optionsList: [],
+  },
+  {
+    title: "minor ticks color",
+    optionsList: [],
+  },
+  {
+    title: "center circle color",
+    optionsList: [],
+  },
+  {
+    title: "alarm ring color",
+    optionsList: [],
+  },
 ];
 
 
@@ -79,83 +89,73 @@ export const analogPropertyButtonData = [
   {
     title: "clock logo component",
     propertyKey: "clockLogoSrcAndOffset",
-    toggleValue: (currentValue) =>
+    toggleValue: (currentValue : any) =>
       currentValue ? undefined : { cmp: <img src={SmileLogo} width="100px" alt="logo" />, offset: 110 }
   },
   {
     title: "has primary ticks",
     propertyKey: "hasPrimaryTicks",
-    toggleValue: (currentValue) => (currentValue ? undefined : false)
+    toggleValue: (currentValue : any) => (currentValue ? undefined : false)
   },
   {
     title: "has major ticks",
     propertyKey: "hasMajorTicks",
-    toggleValue: (currentValue) => (currentValue ? undefined : false)
+    toggleValue: (currentValue : any) => (currentValue ? undefined : false)
   },
   {
     title: "has minor ticks",
     propertyKey: "hasMinorTicks",
-    toggleValue: (currentValue) => (currentValue ? undefined : false)
+    toggleValue: (currentValue : any) => (currentValue ? undefined : false)
   },
   {
     title: "has primary numbers",
     propertyKey: "hasPrimaryNumbers",
-    toggleValue: (currentValue) => (currentValue ? undefined : false)
+    toggleValue: (currentValue : any) => (currentValue ? undefined : false)
   },
   {
     title: "has major numbers",
     propertyKey: "hasMajorNumbers",
-    toggleValue: (currentValue) => (currentValue ? undefined : false)
+    toggleValue: (currentValue : any) => (currentValue ? undefined : false)
   },
   {
     title: "primary ticks component",
     propertyKey: "UserPrimaryTicksComponent",
-    toggleValue: (currentValue) =>
+    toggleValue: (currentValue : any) =>
       currentValue ? undefined : <div style={{ width: "10px", borderRadius: "50%", backgroundColor: "#facb48" }}></div>
   },
   {
     title: "major ticks component",
     propertyKey: "UserMajorTicksComponent",
-    toggleValue: (currentValue) =>
+    toggleValue: (currentValue : any) =>
       currentValue ? undefined : <div style={{ width: "7px", borderRadius: "50%", backgroundColor: "#8f2af5" }}></div>
   },
   {
     title: "minor ticks component",
     propertyKey: "UserMinorTicksComponent",
-    toggleValue: (currentValue) =>
+    toggleValue: (currentValue : any) =>
       currentValue ? undefined : <div style={{ width: "5px", height: "7px", borderRadius: "10px", backgroundColor: "red" }}></div>
   },
   {
     title: "primary numbers component",
     propertyKey: "PrimaryNumbersComponent",
-    toggleValue: (currentValue) =>
+    toggleValue: (currentValue : any) =>
       currentValue ? undefined : <div style={{ width: "20px", height: "20px", borderRadius: "50%", backgroundColor: "#f0ed30" }}></div>
   },
   {
     title: "major numbers component",
     propertyKey: "MajorNumbersComponent",
-    toggleValue: (currentValue) =>
+    toggleValue: (currentValue : any) =>
       currentValue ? undefined : <div style={{ width: "10px", height: "10px", borderRadius: "50%", backgroundColor: "#e0560b" }}></div>
   },
   {
     title: "clock center component",
     propertyKey: "ClockCenterComponent",
-    toggleValue: (currentValue) =>
+    toggleValue: (currentValue : any) =>
       currentValue ? undefined : <div style={{ width: "25px", height: "25px", borderRadius: "50%", backgroundColor: "#8f2af5" }}></div>
   }
 ];
 
 export const digitalPropertySelectData = [
-  {
-    title: "digital color theme mode",
-    optionsList: [
-      { optionName: 'LIGHT', optionValue: 'LIGHT', hasIcon: false },
-      { optionName: 'DARK', optionValue: 'DARK', hasIcon: false },
-      { optionName: 'BLUE_DARK', optionValue: 'BLUE_DARK', hasIcon: false },
-      { optionName: 'RED_DARK', optionValue: 'RED_DARK', hasIcon: false },
-      { optionName: 'AUTUMN', optionValue: 'AUTUMN', hasIcon: false }
-    ]
-  },
   {
     title: "padding",
     optionsList: [
@@ -180,13 +180,17 @@ export const digitalPropertySelectData = [
   {
     title: "dots color",
     optionsList: []
-  }
+  },
+  {
+    title: "alarm ring color",
+    optionsList: [],
+  },
 ];
 
 export const digitalPropertyButtonData = [
   {
     title: "twenty four hours",
     propertyKey: "twentyFourHours",
-    toggleValue: (currentValue) => !currentValue,
+    toggleValue: (currentValue: boolean) => !currentValue,
   }
 ];

@@ -1,47 +1,34 @@
 import { FC, useCallback, useState } from "react"
-import { PropertyContainer, PropertyDropDownWrapper, PropertyOptionWrapper, PropertyOptionWrapperProps, PropertyWrapper, SelectedOptionWrapper } from "../../styles/app"
-import Icon, { IconProps } from "../../icons/icon"
-import { IconName } from "../../icons/icon-list"
+import { PropertyContainer, PropertyDropDownWrapper, PropertyOptionWrapper, PropertyWrapper, SelectedOptionWrapper } from "../../styles/app"
+import Icon from "../../icons/icon"
 import { wordWithSpacesToCamelcaseConvertor } from "../../utils/word-with-spaces-to-camelcase-convertor"
+import { capitalizeFirstLetter } from "../../utils/clock-utils"
 
-interface OptionBaseProps extends PropertyOptionWrapperProps {
+interface OptionProps  {
     optionName: string
     optionValue: any
 
 }
 
-interface OptionWithIcon extends Omit<OptionBaseProps, 'hasIcon'> {
-    hasIcon: true
-    icon: FC<IconProps>
-    iconName: IconName
 
-}
-
-interface OptionWithoutIcon extends Omit<OptionBaseProps, 'hasIcon'> {
-    hasIcon: false
-    icon?: undefined
-    iconName?: undefined
-}
-
-export type Option = OptionWithIcon | OptionWithoutIcon
 
 
 interface PropertySelectProps {
     title: string
-    optionsList: Array<Option>
-    addProperty: (property: { title: string, propType: 'option' | 'toggle', value: string | number }) => void
+    optionsList: Array<OptionProps>
+    addProperty: (property: { title: string, propType: string, value: string | number }) => void
 }
 
 const PropertySelect: FC<PropertySelectProps> = ({ optionsList, title, addProperty }) => {
     const [showOptions, setShowOptions] = useState<boolean>(false)
-    const [selectedOption, setSelectedOption] = useState<Option>(optionsList[0])
+    const [selectedOption, setSelectedOption] = useState<OptionProps>(optionsList[0])
     const [currentColor, setCurrentColor] = useState<string>('#000000')
 
     const handleOpen = useCallback(() => {
         setShowOptions(prevState => !prevState)
     }, [])
 
-    const handleOptionSelect = useCallback((option: Option) => {
+    const handleOptionSelect = useCallback((option: OptionProps) => {
         const propertyTitle = wordWithSpacesToCamelcaseConvertor(title)
         addProperty({ title: propertyTitle, propType: 'option', value: option.optionValue })
         setSelectedOption(option)
@@ -59,7 +46,7 @@ const PropertySelect: FC<PropertySelectProps> = ({ optionsList, title, addProper
 
     return (
         <PropertyContainer>
-            <div className="title">{title}</div>
+            <div className="title">{capitalizeFirstLetter(title)}</div>
             <PropertyWrapper onClick={handleOpen}>
                 <SelectedOptionWrapper>
                     {
@@ -81,14 +68,6 @@ const PropertySelect: FC<PropertySelectProps> = ({ optionsList, title, addProper
                             </>
                             :
                             <>
-                                {(selectedOption.icon && selectedOption.iconName)
-                                    ? <Icon
-                                        iconName={selectedOption.iconName}
-                                        size='1.25'
-                                        style={{ marginRight: '0.5rem' }}
-                                    />
-                                    : null
-                                }
                                 {selectedOption.optionValue}
                                 <Icon iconName={`${showOptions ? 'arrowUp' : 'arrowDown'}`} size='2' style={{ position: "absolute", right: '2%' }} />
                             </>
@@ -99,14 +78,6 @@ const PropertySelect: FC<PropertySelectProps> = ({ optionsList, title, addProper
                     {
                         optionsList.map((option, index) => (
                             <PropertyOptionWrapper key={index} onClick={() => handleOptionSelect(option)}>
-                                {(option.icon && option.iconName)
-                                    ? <Icon
-                                        iconName={option.iconName}
-                                        size='1.25'
-                                        style={{ marginRight: '0.5rem' }}
-                                    />
-                                    : null
-                                }
                                 {option.optionValue}
                             </PropertyOptionWrapper>
                         ))

@@ -1,4 +1,5 @@
 import { PropertyContainer, PrpertyButtonWrapper } from '../../styles/app';
+import { capitalizeFirstLetter } from '../../utils/clock-utils';
 
 const PropertyButton = ({
   title,
@@ -9,8 +10,8 @@ const PropertyButton = ({
 }: {
   title: string;
   propertyKey: string;
-  addProperty: (property: { title: string, propType: 'toggle' | 'option' | 'setter', value: any }) => void
-  propertiesList: Array<{ title: string, propType: 'toggle' | 'option' | 'setter', value: any }>;
+  addProperty: (property: { title: string, propType: string, value: any }) => void
+  propertiesList: Array<{ title: string, propType: string, value: any }>;
   toggleValue: (currentValue: any) => any;
 }) => {
   const currentProperty = propertiesList.find((prop) => prop.title === propertyKey);
@@ -18,7 +19,7 @@ const PropertyButton = ({
 
   return (
     <PropertyContainer>
-      <label>{title}</label>
+      <label>{capitalizeFirstLetter(title)}</label>
       <PrpertyButtonWrapper
         onClick={() => {
           const newValue = toggleValue(currentValue);
