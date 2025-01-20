@@ -24,7 +24,6 @@ function App() {
       return [{ title: 'clockMode', value: 'analog', propType: "option" }];
     });
   }, []);
-  
 
   const hanldeCopyCode = async () => {
     try {
@@ -32,7 +31,6 @@ function App() {
       setCopied(true);
       setTimeout(() => setCopied(false), 3000);
     } catch (err) {
-      console.error('Failed to copy text:', err);
       setCopied(false);
     }
   }
@@ -40,21 +38,20 @@ function App() {
   const dynamicProps = propertiesList.reduce((acc, property) => {
     if (property.title.includes('Color')) {
       acc.colorConfiguration = acc.colorConfiguration || {};
-  
+
       (acc.colorConfiguration as Record<string, any>)[property.title] = property.value;
     } else {
       acc[property.title] = property.value;
     }
-  
     return acc;
   }, {} as Partial<ClockProps>);
-  
+
   const addPropertyHandle = useCallback(
     (property: { title: string, propType: string, value: any }) => {
       const title = property.title as keyof ClockProps;
       setPropertiesList((prevPropertiesList) => {
         const updatedPropertiesList = title === 'clockMode'
-          ? [{ title, value: property.value, propType: 'option' }] 
+          ? [{ title, value: property.value, propType: 'option' }]
           : prevPropertiesList.find((prop) => prop.title === title) && property.propType !== 'option'
             ? [...prevPropertiesList.filter((prop) => prop.title !== title)]
             : [...prevPropertiesList.filter((prop) => prop.title !== title), { title, value: property.value, propType: property.propType }];
@@ -63,7 +60,6 @@ function App() {
     },
     []
   );
-  
 
   const codeToCopy = useMemo(() => `<Clock ${generatePropsStringWithoutStyle(propertiesList)} \n/>`, [propertiesList])
   const PropsString = useMemo(() => generatePropsString(propertiesList), [propertiesList])
@@ -87,22 +83,20 @@ function App() {
             <CodeCopyButton onClick={resetPropsList} right={2}>Reset</CodeCopyButton>
             <CodeCopyButton onClick={hanldeCopyCode} right={5.7}>{copied ? 'Copied!' : 'Copy'}</CodeCopyButton>
           </CodeViewWrapper>
-
         </TopRightContainer>
       </ClockAndCodeWrapper>
-
       <PropertiesWrapper>
         <PropertiesInnerWrapper>
           <PropertySelect
             title="clock mode"
             addProperty={addPropertyHandle}
             optionsList={[
-              { optionName: 'analog', optionValue: 'analog'},
-              { optionName: 'digital', optionValue: 'digital'},
+              { optionName: 'analog', optionValue: 'analog' },
+              { optionName: 'digital', optionValue: 'digital' },
             ]}
           />
           <PropertyButton
-            key='hasAlarm' 
+            key='hasAlarm'
             title='has alarm'
             propertyKey='hasAlarm'
             addProperty={addPropertyHandle}
@@ -113,7 +107,7 @@ function App() {
             <>
               {analogPropertySelectData.map((property) => (
                 <PropertySelect
-                  key={property.title}  
+                  key={property.title}
                   title={property.title}
                   addProperty={addPropertyHandle}
                   optionsList={property.optionsList}
